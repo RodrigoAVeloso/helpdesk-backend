@@ -24,10 +24,10 @@ public class TecnicoDto implements Serializable {
 	protected LocalDate dataCriacao = LocalDate.now();
 
 	public TecnicoDto() {
+		addPerfil(Perfil.TECNICO);
 	}
 
 	public TecnicoDto(Tecnico obj) {
-		super();
 		this.id = obj.getId();
 		this.nome = obj.getNome();
 		this.cpf = obj.getCpf();
@@ -81,7 +81,7 @@ public class TecnicoDto implements Serializable {
 		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
 	}
 
-	public void addPerfis(Perfil perfil) {
+	public void addPerfil(Perfil perfil) {
 		this.perfis.add(perfil.getCodigo());
 	}
 
@@ -92,6 +92,5 @@ public class TecnicoDto implements Serializable {
 	public void setDataCriacao(LocalDate dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
-	
 
 }
