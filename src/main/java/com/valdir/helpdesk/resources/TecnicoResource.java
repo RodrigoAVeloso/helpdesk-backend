@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +42,8 @@ public class TecnicoResource {
 		List<TecnicoDto> listDto = list.stream().map(obj -> new TecnicoDto(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
 	}
-
+	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<TecnicoDto> create(@RequestBody @Valid TecnicoDto objDto) {
 		Tecnico newObj = service.create(objDto);
@@ -49,12 +51,14 @@ public class TecnicoResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping(value="/{id}")
 	public ResponseEntity<TecnicoDto> update(@PathVariable Integer id,@Valid @RequestBody TecnicoDto objDto){
 		Tecnico obj = service.update(id, objDto);
 		return ResponseEntity.ok().body(new TecnicoDto(obj));
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping(value="/{id}")
 	public ResponseEntity<TecnicoDto> delete(@PathVariable Integer id){
 		service.delete(id);
